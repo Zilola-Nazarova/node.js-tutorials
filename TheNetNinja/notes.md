@@ -6,8 +6,11 @@ Windows: download installer from https://nodejs.org/en/download or use Chocolate
 ### Method 2 (preferred).
 Use [nvm](https://github.com/nvm-sh/nvm/blob/master/README.md):
 - 2.1. Windows: download [setup.exe](https://github.com/coreybutler/nvm-windows/releases)
-- 2.2. Linux: `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash`
-```
+- 2.2. Linux: 
+  ```sh
+  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+  ```
+```sh
 nvm list available
 nvm install version
 nvm use version
@@ -15,10 +18,10 @@ nvm use version
 Check [Microverse NPM lesson](https://github.com/microverseinc/curriculum-javascript/blob/main/books/lessons/js_packages_management.md) for more info about Node.js and npm.
 
 ## TheGlobalObject methods
-```
-console.log(text);
-setTimeout(function(){}, ms);
-setIntercval(function(){}, ms);
+```js
+console.log(text)
+setTimeout(function(){}, ms)
+setInterval(function(){}, ms)
 __dirname
 __filename
 require('./path')
@@ -51,6 +54,9 @@ callFunction(variable);
 Require a module
 ```js
 const variable = require('./path');
+// invoke if one var exported
+variable(params);
+// invoke if multiple vars exported
 variable.prop1(params);
 variable.prop2(params);
 ```
@@ -68,14 +74,17 @@ module.exports = {
 
 module.exports.prop1 = function(){};
 module.exports.prop2 = function(){};
-
 ```
 
 ## EventModule
 Import EventModule:
-`const events = require('events');`
+```js
+const events = require('events');
+```
 Events module has an EventEmitter property, which is a constructor:
-`const variable = new events.EventEmitter();`
+```js
+const variable = new events.EventEmitter();
+```
 We can create custom events on EventEmitter object:
 ```js
 variable.on('eventName', function(params) {
@@ -83,14 +92,75 @@ variable.on('eventName', function(params) {
 });
 ```
 To fire an event:
-`myEmitter.emit('eventName', params);`
+```js
+myEmitter.emit('eventName', params);
+```
 Utility module allows to inherit properties/methods from other objects:
-`const util = require('util');`
-Create new object cunstructor
+```js
+const util = require('util');
+```
+Create new object cunstructor:
 ```js
 const objectConstructor = function(name) {
   this.name = name;
 };
 ```
-Make its instances(objects) inherit props/methods from EventEmitter constructor
-`util.inherits(objectConstructor, events.EventEmitter);`
+Make its instances(objects) inherit props/methods from EventEmitter constructor:
+```js
+util.inherits(objectConstructor, events.EventEmitter);
+```
+
+## Working with files
+Import core module:
+```js
+const fs = require('fs');
+```
+_Convention is to keep the name of the module_
+
+### Reading/writing
+Synchronous (blocking) functions:
+```js
+const var_name = fs.readFileSync('file_path', 'utf8');
+fs.writeFileSync('file_path', data);
+```
+Asynchronous (non-blocking) function **(need a callback function)**:
+```js
+fs.readFile('file_path', 'utf8', function(err, data) {
+  if (err) throw err;
+  // code
+});
+```
+```js
+fs.writeFile('file_path', data, function(err) {
+  if (err) throw err;
+  // code
+});
+```
+
+### Deleting
+```js
+fs.unlink('file_path', function(err) {
+  if (err) throw err;
+  // code
+});
+```
+### Create/delete directory
+Synchronous (blocking) functions:
+```js
+fs.mkdirSync('dir_path');
+fs.rmdirSync('dir_path');
+```
+Asynchronous (non-blocking) functions:
+```js
+fs.mkdir('dir_path', function() {
+  // code
+});
+```
+```js
+// we need to empty the directory in order to delete it
+fs.unlink('file_path', function() {
+  fs.rmdir('dir_path', function(err){
+      if (err) throw err;
+  });
+});
+```

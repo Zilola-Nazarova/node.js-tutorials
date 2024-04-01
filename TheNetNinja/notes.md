@@ -110,7 +110,7 @@ Make its instances(objects) inherit props/methods from EventEmitter constructor:
 util.inherits(objectConstructor, events.EventEmitter);
 ```
 
-## Working with files
+## Working with files/directories
 Import core module:
 ```js
 const fs = require('fs');
@@ -162,5 +162,54 @@ fs.unlink('file_path', function() {
   fs.rmdir('dir_path', function(err){
       if (err) throw err;
   });
+});
+```
+
+## Server
+We need the `http` core module:
+```js
+const http = require('http');
+```
+Creating a server:
+```js
+const server = http.createServer(function(req, res) {
+  // code
+});
+```
+Request/response methods:
+```js
+// Accessing request url
+req.url;
+// Formatting response headers
+res.writeHead(status, {'Attr1': 'val1', 'Attr2': 'val2'});
+// Sending the response
+res.end('content');
+```
+Specifying the port:
+```js
+server.listen(3000, '127.0.0.1');
+```
+
+## Streams
+We need the `fs` core module:
+```js
+const fs = require('fs');
+```
+### Readable/Writable
+Creating readable/writable stream:
+```js
+const readStream = fs.createReadStream('file_path', 'encoding');
+const writeStream = fs.createWriteStream('file_path');
+```
+Receiving chunks from the readable stream:
+```js
+readStream.on('data', function(chunk) {
+  //code
+});
+```
+Writing chunks to the writable stream:
+```js
+readStream.on('data', function(chunk) {
+  writeStream.write(chunk);
 });
 ```

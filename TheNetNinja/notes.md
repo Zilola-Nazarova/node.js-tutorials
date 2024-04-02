@@ -189,6 +189,11 @@ Specifying the port:
 ```js
 server.listen(3000, '127.0.0.1');
 ```
+### Serving JSON
+Use JSON.stringify method to convert JavaScript objects to JSON:
+```js
+res.end(JSON.stringify(object));
+```
 
 ## Streams
 We need the `fs` core module:
@@ -211,5 +216,28 @@ Writing chunks to the writable stream:
 ```js
 readStream.on('data', function(chunk) {
   writeStream.write(chunk);
+});
+```
+
+### Pipes
+1. Create readable and writable streams.
+    ```js
+    const readStream = fs.createReadStream('file_path', 'encoding');
+    const writeStream = fs.createWriteStream('file_path');
+    readStream.pipe(writeStream);
+    ```
+2. Pipe the writable stream to the readable stream.
+    ```js
+    readStream.pipe(writeStream);
+    ```
+    We can also pipe server response to the readable stream:
+    ```js
+    readStream.pipe(res);
+    ```
+Example:
+```js
+const server = http.createServer(function(req, res) {
+  res.writeHead(200, {'Content-Type': 'text/html'});
+  readStream.pipe(res);
 });
 ```

@@ -262,3 +262,54 @@ if (req.url === '/home' || req.url === '/') {
 
 ## Express
 Installation: `npm install express`.
+
+### Basics
+```js
+// Import express module to the file
+const express = require('express');
+// Set up express app
+const app = express();
+// Listen to a port
+app.listen(3000);
+```
+Requests:
+```js
+app.get('route', fn(req, res){});
+app.post('route', fn(req, res){});
+app.delete('route', fn(req, res){});
+```
+Response methods:
+```js
+// string or buffer
+res.send('string');
+// static files
+res.sendFile('path');
+// templates
+res.render('file', {params}); // template is in views foler
+```
+
+### Dynamic Routing
+Dynamic url comes with colons:
+> '/profile/:param'
+To access the parameter we use:
+> req.params.param
+
+### Template Engines
+There are several template engines, one popular engines is EJS.
+
+Installation: `npm install ejs`.
+
+Set the view engine in Express:
+```js
+app.set('view engine', 'ejs');
+```
+Embed JS in .ejs file: `<%= code %>`.
+
+Render the template in Express:
+```js
+app.get('/profile/:id', function(req, res) {
+  const data = {name: 'Zilola', age: 29, job: 'developer'};
+  res.render('profile', {id: req.params.id, data: data});
+});
+```
+The template should be located in 'views' folder by default.

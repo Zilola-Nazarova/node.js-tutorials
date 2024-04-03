@@ -9,6 +9,7 @@ fs.writeFileSync(__dirname + '/writeMeSync.txt', readMe);
 
 // asyncronous (non-blocking) functions
 fs.readFile(__dirname + '/readMeAsync.txt', 'utf8', function(err, data) {
+  if (err) throw err;
   console.log(data);
   fs.writeFile(__dirname + '/writeMeAsync.txt', data, function(err) {
     if (err) throw err;

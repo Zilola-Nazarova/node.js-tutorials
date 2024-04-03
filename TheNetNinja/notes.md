@@ -189,17 +189,23 @@ Specifying the port:
 ```js
 server.listen(3000, '127.0.0.1');
 ```
+
 ### Serving JSON
 Use JSON.stringify method to convert JavaScript objects to JSON:
 ```js
 res.end(JSON.stringify(object));
 ```
 
+### Automatic restart
+Install gloablly `npm install -g nodemon`.
+Instead of `node app.js` run `nodemon app.js`.
+
 ## Streams
 We need the `fs` core module:
 ```js
 const fs = require('fs');
 ```
+
 ### Readable/Writable
 Creating readable/writable stream:
 ```js
@@ -254,5 +260,5 @@ if (req.url === '/home' || req.url === '/') {
 }
 ```
 
-### Express
+## Express
 Installation: `npm install express`.
